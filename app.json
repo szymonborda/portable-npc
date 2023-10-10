@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "35507cff-47b4-45c0-9468-ae88b08205f5"
+      }
+    },
+    "owner": "szymonborda"
   }
 }
