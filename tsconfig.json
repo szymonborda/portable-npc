@@ -1,16 +1,12 @@
 {
   "extends": "expo/tsconfig.base",
-  "include": [
-    "**/*.ts",
-    "**/*.tsx"
-  ],
+  "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"],
   "compilerOptions": {
     "strict": true,
+    "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     }
   }
 }
