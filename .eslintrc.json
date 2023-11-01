@@ -6,6 +6,7 @@
   "rules": {
     "react/react-in-jsx-scope": "off",
     "react/style-prop-object": "off",
-    "import/extensions": "off"
+    "import/extensions": "off",
+    "react/no-unstable-nested-components": "off"
   }
 }
