@@ -5,6 +5,7 @@
   },
   "rules": {
     "react/react-in-jsx-scope": "off",
-    "react/style-prop-object": "off"
+    "react/style-prop-object": "off",
+    "import/extensions": "off"
   }
 }
