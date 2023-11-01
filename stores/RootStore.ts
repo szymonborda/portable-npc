@@ -1,13 +1,19 @@
 import { AsyncTrunk } from 'mobx-sync';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import OpenAIStore from './OpenAIStore';
+import SettingsStore from './SettingsStore';
 
 class RootStore {
-  openAI: OpenAIStore;
+  settings: SettingsStore;
 
   constructor() {
-    this.openAI = new OpenAIStore();
+    this.settings = new SettingsStore();
+  }
+
+  getStores() {
+    return {
+      settings: this.settings,
+    };
   }
 }
 

@@ -1,7 +1,10 @@
 import { Stack } from 'expo-router';
-import { View, Text } from 'react-native-ui-lib';
+import { observer } from 'mobx-react';
+import { View, TextField } from 'react-native-ui-lib';
+import useStores from '@/stores/useStores';
 
-export default function Settings() {
+function Settings() {
+  const { settings } = useStores();
   return (
     <View
       style={{ alignItems: 'center', justifyContent: 'center', padding: 10 }}
@@ -12,7 +15,14 @@ export default function Settings() {
           headerRight: () => null,
         }}
       />
-      <Text>Settings page tbd</Text>
+      <TextField
+        floatingPlaceholder
+        placeholder="OpenAI API Key"
+        value={settings.openAIAPIKey}
+        onChangeText={(text) => settings.setOpenAIAPIKey(text)}
+      />
     </View>
   );
 }
+
+export default observer(Settings);

@@ -2,12 +2,9 @@ import React from 'react';
 
 import { MobXProviderContext } from 'mobx-react';
 
-import type OpenAIStore from './OpenAIStore';
+import type RootStore from './RootStore';
 
-interface Stores {
-  openAI: OpenAIStore;
-}
-
-const useStores = () => React.useContext(MobXProviderContext) as Stores;
+const useStores = () =>
+  React.useContext(MobXProviderContext) as ReturnType<RootStore['getStores']>;
 
 export default useStores;

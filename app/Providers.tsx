@@ -4,16 +4,16 @@ import { useEffect, useState } from 'react';
 import { rootStore, trunk } from '@/stores/RootStore';
 
 export default function Providers({ children }: { children: React.ReactNode }) {
-  const [isStoreLoaded, setIsStoreLoaded] = useState(false);
+  const [storesLoaded, setStoresLoaded] = useState(false);
   useEffect(() => {
     const rehydrate = async () => {
       await trunk.init();
-      setIsStoreLoaded(true);
+      setStoresLoaded(true);
     };
     rehydrate();
   }, []);
 
-  if (!isStoreLoaded) {
+  if (!storesLoaded) {
     return (
       <View
         style={{ alignItems: 'center', justifyContent: 'center', padding: 10 }}
@@ -23,5 +23,5 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     );
   }
 
-  return <Provider {...rootStore}>{children}</Provider>;
+  return <Provider {...rootStore.getStores()}>{children}</Provider>;
 }
