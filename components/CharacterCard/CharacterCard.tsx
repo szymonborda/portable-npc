@@ -8,7 +8,10 @@ interface CharacterCardProps {
 
 export default function CharacterCard({ title, image }: CharacterCardProps) {
   return (
-    <Card row style={{ width: '100%' }} onPress={() => router.push('/char')}>
+    <Card
+      row
+      onPress={() => router.push({ pathname: '/chat', params: { title } })}
+    >
       <Card.Image
         source={{
           uri: image,
