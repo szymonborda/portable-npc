@@ -8,6 +8,7 @@
     "no-restricted-exports": "off",
     "react/react-in-jsx-scope": "off",
     "react/style-prop-object": "off",
+    "react/jsx-props-no-spreading": "off",
     "react/no-unstable-nested-components": "off"
   }
 }
