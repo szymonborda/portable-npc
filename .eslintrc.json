@@ -4,9 +4,10 @@
     "project": "./tsconfig.json"
   },
   "rules": {
+    "import/extensions": "off",
+    "no-restricted-exports": "off",
     "react/react-in-jsx-scope": "off",
     "react/style-prop-object": "off",
-    "import/extensions": "off",
     "react/no-unstable-nested-components": "off"
   }
 }

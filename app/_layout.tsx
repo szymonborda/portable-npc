@@ -1,4 +1,4 @@
-import { Link, Stack } from 'expo-router';
+import { Stack, router } from 'expo-router';
 import { Colors } from 'react-native-ui-lib';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import '@/consts/theme';
@@ -15,9 +15,13 @@ export default function Layout() {
           fontWeight: 'bold',
         },
         headerRight: () => (
-          <Link href="/settings">
-            <Icon name="cog" color={Colors.white} size={16} />
-          </Link>
+          <Icon.Button
+            name="cog"
+            backgroundColor={Colors.transparent}
+            color={Colors.white}
+            onPress={() => router.push('/settings')}
+            style={{ paddingLeft: 20 }}
+          />
         ),
       }}
     />
