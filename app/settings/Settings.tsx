@@ -15,12 +15,14 @@ function Settings() {
           headerRight: () => null,
         }}
       />
-      <TextField
-        floatingPlaceholder
-        placeholder="OpenAI API Key"
-        value={settings.openAIAPIKey}
-        onChangeText={(text) => settings.setOpenAIAPIKey(text)}
-      />
+      <View style={{width: '100%'}}>
+        <TextField
+          floatingPlaceholder
+          placeholder="OpenAI API Key"
+          value={settings.openAIAPIKey}
+          onChangeText={(text) => settings.setOpenAIAPIKey(text)}
+        />
+      </View>
     </View>
   );
 }
