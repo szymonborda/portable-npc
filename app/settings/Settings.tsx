@@ -15,7 +15,7 @@ function Settings() {
           headerRight: () => null,
         }}
       />
-      <View style={{width: '100%'}}>
+      <View style={{ width: '100%' }}>
         <TextField
           floatingPlaceholder
           placeholder="OpenAI API Key"

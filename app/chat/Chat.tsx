@@ -1,10 +1,11 @@
 import { Stack, useLocalSearchParams } from 'expo-router';
 import { Colors, Text, TextField, View } from 'react-native-ui-lib';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import type {
-  NativeSyntheticEvent,
-  TextInputSubmitEditingEventData,
+import {
+  type NativeSyntheticEvent,
+  type TextInputSubmitEditingEventData,
 } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import useGPT, { GPTMessage } from './useGPT';
 
 export default function Chat() {
@@ -29,11 +30,11 @@ export default function Chat() {
           headerRight: () => null,
         }}
       />
-      <View>
+      <ScrollView style={{ maxHeight: 700 }}>
         {messages.map((message, index) => (
           <ChatMessage key={index} message={message} />
         ))}
-      </View>
+      </ScrollView>
       <View
         style={{
           marginBottom: 20,
