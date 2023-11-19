@@ -1,16 +1,21 @@
-import { Stack, useLocalSearchParams } from 'expo-router';
+import { Stack, useLocalSearchParams, router } from 'expo-router';
 import { Colors, Text, TextField, View } from 'react-native-ui-lib';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
+  Alert,
   type NativeSyntheticEvent,
   type TextInputSubmitEditingEventData,
 } from 'react-native';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import { useRef } from 'react';
 import useGPT, { GPTMessage } from './useGPT';
+import useStores from '@/stores/useStores';
 
 export default function Chat() {
   const { title } = useLocalSearchParams();
+  const {
+    settings: { openAIAPIKey },
+  } = useStores();
   const { messages, addMessage, isPending, isError } = useGPT();
   const inputRef = useRef<TextInput>(null);
   const handleAddMessage = (
@@ -19,6 +24,28 @@ export default function Chat() {
     addMessage(event.nativeEvent.text);
     inputRef.current?.clear();
   };
+
+  if (!openAIAPIKey) {
+    Alert.alert(
+      'OpenAI API Key is missing',
+      'Please go to Settings and enter your OpenAI API Key.',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => {
+            router.back();
+          },
+        },
+        {
+          text: 'Go to Settings',
+          onPress: () => {
+            router.push({ pathname: '/settings' });
+          },
+        },
+      ],
+    );
+  }
+
   return (
     <KeyboardAwareScrollView
       contentContainerStyle={{
@@ -29,7 +56,7 @@ export default function Chat() {
     >
       <Stack.Screen
         options={{
-          title: `Chat with ${title}`,
+          title: `${title}`,
           headerRight: () => null,
         }}
       />
