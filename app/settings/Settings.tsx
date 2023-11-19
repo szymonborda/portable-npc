@@ -21,6 +21,7 @@ function Settings() {
           placeholder="OpenAI API Key"
           value={settings.openAIAPIKey}
           onChangeText={(text) => settings.setOpenAIAPIKey(text)}
+          formatter={(value) => value ? value.replace(/./g, '*') : ''}
         />
       </View>
     </View>
