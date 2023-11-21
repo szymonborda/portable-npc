@@ -15,7 +15,7 @@ export default function useGPT() {
   const { mutate, isPending, isError } = useMutation({
     mutationKey: ['postMessage'],
     mutationFn: addMessagePost,
-    onSuccess: (data) => {
+    onSuccess: ({ data }) => {
       if (!data) return;
       setMessages((currentMessages) => [
         ...currentMessages,

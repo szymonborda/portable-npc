@@ -39,7 +39,7 @@ export default function Chat() {
         {
           text: 'Go to Settings',
           onPress: () => {
-            router.push({ pathname: '/settings' });
+            router.replace({ pathname: '/settings' });
           },
         },
       ],
