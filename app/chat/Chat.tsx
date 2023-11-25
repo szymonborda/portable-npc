@@ -28,7 +28,7 @@ export default function Chat() {
   if (!openAIAPIKey) {
     Alert.alert(
       'OpenAI API Key is missing',
-      'Please go to Settings and enter your OpenAI API Key.',
+      'Please go to App Settings and enter your OpenAI API Key.',
       [
         {
           text: 'Cancel',
@@ -37,9 +37,9 @@ export default function Chat() {
           },
         },
         {
-          text: 'Go to Settings',
+          text: 'Go to App Settings',
           onPress: () => {
-            router.replace({ pathname: '/settings' });
+            router.replace({ pathname: '/settings/app' });
           },
         },
       ],

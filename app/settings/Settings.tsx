@@ -1,10 +1,12 @@
-import { Link, Stack } from 'expo-router';
+import { Stack, router } from 'expo-router';
 import { observer } from 'mobx-react';
-import { View, TextField, Button } from 'react-native-ui-lib';
+import { View, GridList, Text } from 'react-native-ui-lib';
+import { TouchableHighlight } from 'react-native-gesture-handler';
+import { Platform } from 'react-native';
 import useStores from '@/stores/useStores';
 
 function Settings() {
-  const { settings, auth } = useStores();
+  const { auth } = useStores();
   return (
     <View
       style={{ alignItems: 'center', justifyContent: 'center', padding: 10 }}
@@ -16,18 +18,50 @@ function Settings() {
         }}
       />
       <View style={{ width: '100%' }}>
-        <TextField
-          floatingPlaceholder
-          placeholder="OpenAI API Key"
-          value={settings.openAIAPIKey}
-          onChangeText={(text) => settings.setOpenAIAPIKey(text)}
-          formatter={(value) => (value ? value.replace(/./g, '*') : '')}
+        <GridList
+          numColumns={1}
+          ItemSeparatorComponent={
+            Platform.OS !== 'android'
+              ? ({ highlighted }) => (
+                  <View style={[highlighted && { marginLeft: 0 }]} />
+                )
+              : null
+          }
+          data={[
+            {
+              text: 'App Settings',
+              onPress: () => router.push('/settings/app'),
+            },
+            auth.isLogged
+              ? { text: 'Logout', onPress: () => auth.logout(), color: 'red10' }
+              : {
+                  text: 'Login',
+                  onPress: () => router.push('/login'),
+                  color: 'blue10',
+                },
+          ]}
+          renderItem={({ item, separators }) => (
+            <TouchableHighlight
+              key={item.text}
+              onPress={item.onPress}
+              onShowUnderlay={separators.highlight}
+              onHideUnderlay={separators.unhighlight}
+            >
+              <View
+                style={{
+                  padding: 10,
+                  backgroundColor: 'white',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}
+              >
+                <Text {...{ [item.color ?? 'black10']: true }}>
+                  {item.text}
+                </Text>
+              </View>
+            </TouchableHighlight>
+          )}
         />
-        {auth.isLogged ? (
-          <Button label="Logout" onPress={() => auth.logout()} />
-        ) : (
-          <Link href="/login">Login</Link>
-        )}
       </View>
     </View>
   );

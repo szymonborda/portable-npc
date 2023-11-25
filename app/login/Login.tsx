@@ -52,6 +52,7 @@ function Login() {
           control={control}
           defaultValue=""
           placeholder="Password"
+          secureTextEntry
         />
         <Button label="Login" onPress={handleSubmit(handleLogin)} />
         {error && (
