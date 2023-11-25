@@ -1,6 +1,7 @@
-import { Stack } from 'expo-router';
-import { View } from 'react-native-ui-lib';
+import { Stack, router } from 'expo-router';
+import { Card } from 'react-native-ui-lib';
 import { useQuery } from '@tanstack/react-query';
+import { ScrollView } from 'react-native-gesture-handler';
 import CharacterCard from '@/components/CharacterCard';
 import useStores from '@/stores/useStores';
 import { getChatCharacters } from '@/api/chat-character';
@@ -13,8 +14,12 @@ export default function Home() {
     enabled: auth.isLogged,
   });
   return (
-    <View
-      style={{ alignItems: 'center', justifyContent: 'center', padding: 10 }}
+    <ScrollView
+      contentContainerStyle={{
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 10,
+      }}
     >
       <Stack.Screen
         options={{
@@ -35,6 +40,13 @@ export default function Home() {
             image={image}
           />
         ))}
-    </View>
+      <Card row onPress={() => router.push({ pathname: '/add-character' })}>
+        <Card.Section
+          content={[{ text: 'Add new character', text65L: true, grey10: true }]}
+          flex
+          center
+        />
+      </Card>
+    </ScrollView>
   );
 }
