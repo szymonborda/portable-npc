@@ -7,6 +7,7 @@ export interface GPTResponse {
 
 export interface GPTRequest {
   messages: GPTMessage[];
+  name: string;
   context: string;
   openai_api_key: string;
 }

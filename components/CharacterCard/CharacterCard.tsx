@@ -2,15 +2,23 @@ import { Card } from 'react-native-ui-lib';
 import { router } from 'expo-router';
 
 interface CharacterCardProps {
-  title: string;
+  name: string;
+  description: string;
   image: string;
 }
 
-export default function CharacterCard({ title, image }: CharacterCardProps) {
+export default function CharacterCard({
+  name,
+  description,
+  image,
+}: CharacterCardProps) {
   return (
     <Card
       row
-      onPress={() => router.push({ pathname: '/chat', params: { title } })}
+      onPress={() =>
+        router.push({ pathname: '/chat', params: { name, description } })
+      }
+      style={{ marginBottom: 10 }}
     >
       <Card.Image
         source={{
@@ -19,7 +27,7 @@ export default function CharacterCard({ title, image }: CharacterCardProps) {
         style={{ width: 100, height: 100 }}
       />
       <Card.Section
-        content={[{ text: title, text65L: true, grey10: true }]}
+        content={[{ text: name, text65L: true, grey10: true }]}
         flex
         center
       />

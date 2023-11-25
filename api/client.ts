@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import axios, { AxiosRequestConfig } from 'axios';
-import { rootStore } from '@/stores/RootStore';
+import AuthStore from '@/stores/AuthStore';
 
 export const client = axios.create({
   baseURL: 'http://192.168.1.101:8000/api/',
@@ -9,7 +9,7 @@ export const client = axios.create({
 
 client.interceptors.request.use(
   async (config) => {
-    const access = await rootStore.auth.getAccessToken();
+    const access = await AuthStore.getAccessToken();
     if (access) {
       config.headers.set('Authorization', `Bearer ${access}`);
     }
@@ -39,7 +39,7 @@ client.interceptors.response.use(
     const config = error?.config;
     if (shouldGetNewAccessToken(error)) {
       config._retry = true;
-      const accessToken = await rootStore.auth.getNewAccessToken();
+      const accessToken = await AuthStore.getNewAccessToken();
       if (accessToken) {
         config.headers.set('Authorization', `Bearer ${accessToken}`);
       }

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { rootStore, trunk } from '@/stores/RootStore';
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   const [storesLoaded, setStoresLoaded] = useState(false);

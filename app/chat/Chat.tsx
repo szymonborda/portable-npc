@@ -12,11 +12,14 @@ import useGPT, { GPTMessage } from './useGPT';
 import useStores from '@/stores/useStores';
 
 export default function Chat() {
-  const { title } = useLocalSearchParams();
+  const { name, description } = useLocalSearchParams();
   const {
     settings: { openAIAPIKey },
   } = useStores();
-  const { messages, addMessage, isPending, isError } = useGPT();
+  const { messages, addMessage, isPending, isError } = useGPT({
+    name,
+    description,
+  } as any);
   const inputRef = useRef<TextInput>(null);
   const handleAddMessage = (
     event: NativeSyntheticEvent<TextInputSubmitEditingEventData>,
@@ -56,7 +59,7 @@ export default function Chat() {
     >
       <Stack.Screen
         options={{
-          title: `${title}`,
+          title: `${name}`,
           headerRight: () => null,
         }}
       />

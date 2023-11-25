@@ -9,7 +9,13 @@ export interface GPTMessage {
   state: 'pending' | 'success' | 'error';
 }
 
-export default function useGPT() {
+export default function useGPT({
+  name,
+  description,
+}: {
+  name: string;
+  description: string;
+}) {
   const [messages, setMessages] = useState<GPTMessage[]>([]);
   const { settings } = useStores();
   const { mutate, isPending, isError } = useMutation({
@@ -31,7 +37,8 @@ export default function useGPT() {
     ];
     mutate({
       messages: newMessages,
-      context: 'You are Dwarf Edward. Help the explorer on his journey.',
+      name,
+      context: description,
       openai_api_key: settings.openAIAPIKey ?? '',
     });
     setMessages(newMessages);
