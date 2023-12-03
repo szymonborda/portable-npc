@@ -21,10 +21,6 @@ export interface ObtainTokenPairResponse {
   refresh: string;
 }
 
-export interface RefreshTokenResponse {
-  access: string;
-}
-
 export interface RegisterResponse {
   username: string;
   email: string;
@@ -40,13 +36,6 @@ export const obtainTokenPair = async (data: ObtainTokenPairData) =>
   requestHandler<ObtainTokenPairResponse>({
     method: 'POST',
     url: '/token/',
-    data,
-  });
-
-export const refreshAccessToken = async (data: { refresh: string }) =>
-  requestHandler<RefreshTokenResponse>({
-    method: 'POST',
-    url: '/token/refresh/',
     data,
   });
 

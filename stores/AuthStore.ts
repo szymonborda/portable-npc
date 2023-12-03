@@ -1,6 +1,10 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { makeAutoObservable } from 'mobx';
-import { refreshAccessToken } from '@/api/auth';
+import {
+  removeAccessToken,
+  removeRefreshToken,
+  setAccessToken,
+  setRefreshToken,
+} from '@/utils/asyncStorage';
 
 class AuthStore {
   isLogged = false;
@@ -11,29 +15,14 @@ class AuthStore {
 
   setTokenPair({ access, refresh }: { access: string; refresh: string }) {
     this.isLogged = true;
-    AsyncStorage.setItem('accessToken', access);
-    AsyncStorage.setItem('refreshToken', refresh);
+    setAccessToken(access);
+    setRefreshToken(refresh);
   }
 
   logout() {
-    AsyncStorage.removeItem('accessToken');
-    AsyncStorage.removeItem('refreshToken');
+    removeAccessToken();
+    removeRefreshToken();
     this.isLogged = false;
-  }
-
-  static getAccessToken = () => AsyncStorage.getItem('accessToken');
-
-  static getRefreshToken = () => AsyncStorage.getItem('refreshToken');
-
-  static async getNewAccessToken() {
-    const refreshToken = await AuthStore.getRefreshToken();
-    if (!refreshToken) return undefined;
-    const { data, status } = await refreshAccessToken({
-      refresh: refreshToken,
-    });
-    if (status !== 200) return undefined;
-    await AsyncStorage.setItem('accessToken', data.access);
-    return data.access;
   }
 }
 
