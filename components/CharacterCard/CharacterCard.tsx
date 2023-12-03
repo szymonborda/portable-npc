@@ -4,7 +4,7 @@ import { router } from 'expo-router';
 interface CharacterCardProps {
   name: string;
   description: string;
-  image: string;
+  image?: string;
 }
 
 export default function CharacterCard({
@@ -21,9 +21,13 @@ export default function CharacterCard({
       style={{ marginBottom: 10 }}
     >
       <Card.Image
-        source={{
-          uri: image,
-        }}
+        source={
+          image
+            ? {
+                uri: image,
+              }
+            : require('@/assets/user.png')
+        }
         style={{ width: 100, height: 100 }}
       />
       <Card.Section

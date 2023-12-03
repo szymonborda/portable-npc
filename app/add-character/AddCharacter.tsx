@@ -1,29 +1,28 @@
-import { View, Button, Text } from 'react-native-ui-lib';
+import { View, Button, Text, Image } from 'react-native-ui-lib';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { router, Stack } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
-import { Platform } from 'react-native';
+import { Alert, ImageSourcePropType, Platform } from 'react-native';
+import { useEffect, useState } from 'react';
+import { observer } from 'mobx-react';
 import FormInput from '@/components/FormInput';
 import {
   AddCharacterData,
   AddCharacterSchema,
   addChatCharacter,
 } from '@/api/chat-character';
+import useStores from '@/stores/useStores';
 
-export default function AddCharacter() {
+function AddCharacter() {
   const { control, handleSubmit, setValue, getFieldState } = useForm({
     resolver: zodResolver(AddCharacterSchema),
     values: {
       name: '',
       description: '',
-      image: {
-        name: '',
-        type: '',
-        uri: '',
-      },
-    },
+    } as AddCharacterData,
   });
   const { mutate, error } = useMutation({
     mutationFn: addChatCharacter,
@@ -31,6 +30,13 @@ export default function AddCharacter() {
       router.replace({ pathname: '/' });
     },
   });
+
+  const {
+    auth: { isLogged },
+  } = useStores();
+
+  const [currentImageSource, setCurrentImageSource] =
+    useState<ImageSourcePropType>(require('@/assets/user.png'));
 
   const handleAdd = (data: AddCharacterData) => {
     mutate(data);
@@ -53,8 +59,32 @@ export default function AddCharacter() {
         uri:
           Platform.OS === 'ios' ? image.uri.replace('file://', '') : image.uri,
       });
+      setCurrentImageSource({
+        uri: image.uri,
+      });
     }
   };
+
+  useEffect(() => {
+    if (!isLogged) {
+      Alert.alert('Login required', 'Please login to add a new character.', [
+        {
+          text: 'Cancel',
+          onPress: () => {
+            router.back();
+          },
+        },
+        {
+          text: 'Login',
+          onPress: () => {
+            router.replace({ pathname: '/login' });
+          },
+        },
+      ]);
+    }
+  }, [isLogged]);
+
+  const imageState = getFieldState('image');
 
   return (
     <View
@@ -79,15 +109,26 @@ export default function AddCharacter() {
           defaultValue=""
           placeholder="Description"
         />
-        <Button label="Choose photo" onPress={pickImage} />
-        {getFieldState('image')?.error?.message && (
-          <Text red10>{getFieldState('image')?.error?.message}</Text>
+        <View onTouchEnd={pickImage}>
+          <Image
+            source={currentImageSource}
+            style={{ width: 100, height: 100, position: 'relative' }}
+          />
+          <Icon
+            name="edit"
+            size={50}
+            style={{ position: 'absolute', opacity: 0.5, top: 25, left: 25 }}
+            color="white"
+          />
+        </View>
+        {imageState?.error?.message && (
+          <Text red10>{imageState?.error?.message}</Text>
         )}
         <Button label="Add character" onPress={handleSubmit(handleAdd)} />
-        {error && (
-          <Text red10>No active account found with the given credentials</Text>
-        )}
+        {error && <Text red10>{error.message}</Text>}
       </View>
     </View>
   );
 }
+
+export default observer(AddCharacter);

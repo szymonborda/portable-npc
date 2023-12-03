@@ -1,5 +1,5 @@
 import { Stack, useLocalSearchParams, router } from 'expo-router';
-import { Colors, Text, TextField, View } from 'react-native-ui-lib';
+import { TextField, View } from 'react-native-ui-lib';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
   Alert,
@@ -7,11 +7,13 @@ import {
   type TextInputSubmitEditingEventData,
 } from 'react-native';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
-import { useRef } from 'react';
-import useGPT, { GPTMessage } from './useGPT';
+import { useEffect, useRef } from 'react';
+import { observer } from 'mobx-react';
+import useGPT from './useGPT';
 import useStores from '@/stores/useStores';
+import { ChatMessage } from './ChatMessage';
 
-export default function Chat() {
+function Chat() {
   const { name, description } = useLocalSearchParams();
   const {
     settings: { openAIAPIKey },
@@ -28,26 +30,28 @@ export default function Chat() {
     inputRef.current?.clear();
   };
 
-  if (!openAIAPIKey) {
-    Alert.alert(
-      'OpenAI API Key is missing',
-      'Please go to App Settings and enter your OpenAI API Key.',
-      [
-        {
-          text: 'Cancel',
-          onPress: () => {
-            router.back();
+  useEffect(() => {
+    if (!openAIAPIKey) {
+      Alert.alert(
+        'OpenAI API Key is missing',
+        'Please go to App Settings and enter your OpenAI API Key.',
+        [
+          {
+            text: 'Cancel',
+            onPress: () => {
+              router.back();
+            },
           },
-        },
-        {
-          text: 'Go to App Settings',
-          onPress: () => {
-            router.replace({ pathname: '/settings/app' });
+          {
+            text: 'Go to App Settings',
+            onPress: () => {
+              router.replace({ pathname: '/settings/app' });
+            },
           },
-        },
-      ],
-    );
-  }
+        ],
+      );
+    }
+  }, [openAIAPIKey]);
 
   return (
     <KeyboardAwareScrollView
@@ -65,6 +69,7 @@ export default function Chat() {
       />
       <ScrollView style={{ maxHeight: 700 }}>
         {messages.map((message, index) => (
+          // eslint-disable-next-line react/no-array-index-key
           <ChatMessage key={index} message={message} />
         ))}
         {isPending && (
@@ -98,52 +103,4 @@ export default function Chat() {
   );
 }
 
-interface ChatMessageProps {
-  message: GPTMessage;
-}
-
-function ChatMessage({ message: { role, content, state } }: ChatMessageProps) {
-  const alignment = role === 'user' ? 'flex-end' : 'flex-start';
-  const backgroundColor = role === 'user' ? Colors.primary : Colors.grey30;
-  const viewStyles = {
-    backgroundColor,
-    borderRadius: 15,
-    padding: 10,
-    alignSelf: alignment,
-    marginBottom: 10,
-  } as const;
-
-  if (state === 'pending') {
-    return (
-      <View
-        style={{
-          ...viewStyles,
-        }}
-      >
-        <Text white>...</Text>
-      </View>
-    );
-  }
-
-  if (state === 'error') {
-    return (
-      <View
-        style={{
-          ...viewStyles,
-          backgroundColor: Colors.red30,
-        }}
-      >
-        <Text white>
-          There was an error with processing your message. Please make sure that
-          your OpenAI API key is valid and try again later.
-        </Text>
-      </View>
-    );
-  }
-
-  return (
-    <View style={viewStyles}>
-      <Text white>{content}</Text>
-    </View>
-  );
-}
+export default observer(Chat);

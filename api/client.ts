@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import AuthStore from '@/stores/AuthStore';
 
 export const client = axios.create({
-  baseURL: 'http://192.168.1.101:8000/api/',
+  baseURL: 'http://192.168.1.103:8000/api/',
   timeout: 60000,
 });
 

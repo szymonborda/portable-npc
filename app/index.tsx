@@ -2,11 +2,12 @@ import { Stack, router } from 'expo-router';
 import { Card } from 'react-native-ui-lib';
 import { useQuery } from '@tanstack/react-query';
 import { ScrollView } from 'react-native-gesture-handler';
+import { observer } from 'mobx-react';
 import CharacterCard from '@/components/CharacterCard';
 import useStores from '@/stores/useStores';
 import { getChatCharacters } from '@/api/chat-character';
 
-export default function Home() {
+function Home() {
   const { auth } = useStores();
   const { data } = useQuery({
     queryKey: ['characters', auth.isLogged],
@@ -42,7 +43,14 @@ export default function Home() {
         ))}
       <Card row onPress={() => router.push({ pathname: '/add-character' })}>
         <Card.Section
-          content={[{ text: 'Add new character', text65L: true, grey10: true }]}
+          content={[
+            {
+              text: '+ Add new character',
+              text65L: true,
+              grey10: true,
+              style: { padding: 10 },
+            },
+          ]}
           flex
           center
         />
@@ -50,3 +58,5 @@ export default function Home() {
     </ScrollView>
   );
 }
+
+export default observer(Home);

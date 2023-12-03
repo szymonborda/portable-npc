@@ -4,11 +4,13 @@
     "project": "./tsconfig.json"
   },
   "rules": {
+    "global-require": "off",
     "import/extensions": "off",
     "no-restricted-exports": "off",
     "react/react-in-jsx-scope": "off",
     "react/style-prop-object": "off",
     "react/jsx-props-no-spreading": "off",
-    "react/no-unstable-nested-components": "off"
+    "react/no-unstable-nested-components": "off",
+    "react/require-default-props": "off"
   }
 }
