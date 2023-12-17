@@ -1,8 +1,8 @@
 import { Stack } from 'expo-router';
 import { observer } from 'mobx-react';
 import { View, TextField } from 'react-native-ui-lib';
-import useStores from '@/stores/useStores';
 import { Picker } from 'react-native-ui-lib/src/components/picker';
+import useStores from '@/stores/useStores';
 import { TRANSCRIBE_LANGUAGES, TranscribeLanguage } from '@/consts/languages';
 
 const languagesPickerItems = TRANSCRIBE_LANGUAGES.map((lang) => ({
