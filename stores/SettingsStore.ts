@@ -1,7 +1,10 @@
 import { makeAutoObservable } from 'mobx';
+import type { TranscribeLanguage } from '@/consts/languages';
 
 class SettingsStore {
   openAIAPIKey?: string;
+
+  transcribeLanguage = 'english' as TranscribeLanguage;
 
   constructor() {
     this.openAIAPIKey = undefined;
@@ -10,6 +13,10 @@ class SettingsStore {
 
   setOpenAIAPIKey(apiKey: string) {
     this.openAIAPIKey = apiKey;
+  }
+
+  setTranscribeLanguage(language: TranscribeLanguage) {
+    this.transcribeLanguage = language;
   }
 }
 
