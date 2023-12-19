@@ -93,7 +93,6 @@ function AddCharacter() {
       <Stack.Screen
         options={{
           title: 'Add character',
-          headerRight: () => null,
         }}
       />
       <View style={{ width: '100%' }}>

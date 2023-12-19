@@ -12,6 +12,7 @@ import { observer } from 'mobx-react';
 import useGPT from './useGPT';
 import useStores from '@/stores/useStores';
 import { ChatMessage } from './ChatMessage';
+import Transcriber from '@/components/Transcriber/Transcriber';
 
 function Chat() {
   const { name, description } = useLocalSearchParams();
@@ -64,7 +65,7 @@ function Chat() {
       <Stack.Screen
         options={{
           title: `${name}`,
-          headerRight: () => null,
+          headerRight: () => <Transcriber setResult={addMessage} />,
         }}
       />
       <ScrollView style={{ maxHeight: 700 }}>

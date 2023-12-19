@@ -1,4 +1,5 @@
 import { Colors, Text, View } from 'react-native-ui-lib';
+import { ActivityIndicator } from 'react-native';
 import { GPTMessage } from './useGPT';
 
 export interface ChatMessageProps {
@@ -25,7 +26,7 @@ export function ChatMessage({
           ...viewStyles,
         }}
       >
-        <Text white>...</Text>
+        <ActivityIndicator size="small" />
       </View>
     );
   }

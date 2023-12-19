@@ -37,7 +37,6 @@ function Login() {
       <Stack.Screen
         options={{
           title: 'Login',
-          headerRight: () => null,
         }}
       />
       <View style={{ width: '100%' }}>

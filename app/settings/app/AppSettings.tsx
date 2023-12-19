@@ -19,7 +19,6 @@ function AppSettings() {
       <Stack.Screen
         options={{
           title: 'App Settings',
-          headerRight: () => null,
         }}
       />
       <View style={{ width: '100%' }}>

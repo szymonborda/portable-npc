@@ -1,8 +1,9 @@
 import { Stack, router } from 'expo-router';
-import { Card } from 'react-native-ui-lib';
+import { Card, Colors } from 'react-native-ui-lib';
 import { useQuery } from '@tanstack/react-query';
 import { ScrollView } from 'react-native-gesture-handler';
 import { observer } from 'mobx-react';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import CharacterCard from '@/components/CharacterCard';
 import useStores from '@/stores/useStores';
 import { getChatCharacters } from '@/api/chat-character';
@@ -25,6 +26,15 @@ function Home() {
       <Stack.Screen
         options={{
           title: 'PortableNPC',
+          headerRight: () => (
+            <Icon.Button
+              name="cog"
+              backgroundColor={Colors.transparent}
+              color={Colors.white}
+              onPress={() => router.push('/settings')}
+              style={{ paddingLeft: 20 }}
+            />
+          ),
         }}
       />
       <CharacterCard
