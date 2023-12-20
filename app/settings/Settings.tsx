@@ -1,9 +1,8 @@
 import { Stack, router } from 'expo-router';
 import { observer } from 'mobx-react';
-import { View, GridList, Text } from 'react-native-ui-lib';
-import { TouchableHighlight } from 'react-native-gesture-handler';
-import { Platform } from 'react-native';
+import { View } from 'react-native-ui-lib';
 import useStores from '@/stores/useStores';
+import MenuList from '@/components/MenuList';
 
 function Settings() {
   const { auth } = useStores();
@@ -17,19 +16,16 @@ function Settings() {
         }}
       />
       <View style={{ width: '100%' }}>
-        <GridList
-          numColumns={1}
-          ItemSeparatorComponent={
-            Platform.OS !== 'android'
-              ? ({ highlighted }) => (
-                  <View style={[highlighted && { marginLeft: 0 }]} />
-                )
-              : null
-          }
+        <MenuList
+          // @ts-expect-error .filter(Boolean) incorrectly typed
           data={[
             {
               text: 'App Settings',
               onPress: () => router.push('/settings/app'),
+            },
+            auth.isLogged && {
+              text: 'Account Settings',
+              onPress: () => router.push('/settings/account'),
             },
             auth.isLogged
               ? { text: 'Logout', onPress: () => auth.logout(), color: 'red10' }
@@ -38,28 +34,7 @@ function Settings() {
                   onPress: () => router.push('/login'),
                   color: 'blue10',
                 },
-          ]}
-          renderItem={({ item, separators }) => (
-            <TouchableHighlight
-              key={item.text}
-              onPress={item.onPress}
-              onShowUnderlay={separators.highlight}
-              onHideUnderlay={separators.unhighlight}
-            >
-              <View
-                style={{
-                  padding: 10,
-                  backgroundColor: 'white',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
-              >
-                <Text {...{ [item.color ?? 'black10']: true }}>
-                  {item.text}
-                </Text>
-              </View>
-            </TouchableHighlight>
-          )}
+          ].filter(Boolean)}
         />
       </View>
     </View>

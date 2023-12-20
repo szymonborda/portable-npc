@@ -40,3 +40,9 @@ export const addChatCharacter = async (data: AddCharacterData) => {
     data: formData,
   });
 };
+
+export const deleteChatCharacter = async (id: number) =>
+  requestHandler<ChatCharacter>({
+    method: 'DELETE',
+    url: `/chat-character/${id}/`,
+  });

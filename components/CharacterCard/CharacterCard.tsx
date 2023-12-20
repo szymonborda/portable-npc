@@ -3,6 +3,7 @@ import { router } from 'expo-router';
 
 interface CharacterCardProps {
   name: string;
+  id?: number;
   description: string;
   image?: string;
 }
@@ -11,12 +12,13 @@ export default function CharacterCard({
   name,
   description,
   image,
+  id,
 }: CharacterCardProps) {
   return (
     <Card
       row
       onPress={() =>
-        router.push({ pathname: '/chat', params: { name, description } })
+        router.push({ pathname: '/chat', params: { name, description, id } })
       }
       style={{ marginBottom: 10 }}
     >

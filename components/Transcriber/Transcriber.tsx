@@ -96,10 +96,11 @@ export default function Transcriber({ setResult }: TranscriberProps) {
   return (
     <Icon.Button
       name={isRecording ? 'stop' : 'microphone'}
-      backgroundColor={isRecording ? Colors.red10 : Colors.transparent}
+      backgroundColor={isRecording ? Colors.red10 : Colors.primary}
       color={Colors.white}
       onPress={isRecording ? stopRecording : startRecording}
-      style={{ paddingLeft: 20 }}
+      style={{ paddingLeft: 20, paddingTop: 15 }}
+      underlayColor={Colors.transparent}
     />
   );
 }

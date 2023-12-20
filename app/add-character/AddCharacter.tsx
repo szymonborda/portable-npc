@@ -70,6 +70,7 @@ function AddCharacter() {
       Alert.alert('Login required', 'Please login to add a new character.', [
         {
           text: 'Cancel',
+          style: 'cancel',
           onPress: () => {
             router.back();
           },

@@ -46,6 +46,7 @@ function Home() {
         data?.data.map(({ id, name, description, image }) => (
           <CharacterCard
             key={id}
+            id={id}
             name={name}
             description={description}
             image={image}
