@@ -1,6 +1,6 @@
 import { Stack, router } from 'expo-router';
 import { observer } from 'mobx-react';
-import { View } from 'react-native-ui-lib';
+import { View, Text } from 'react-native-ui-lib';
 import { useMutation } from '@tanstack/react-query';
 import { Alert } from 'react-native';
 import useStores from '@/stores/useStores';
@@ -44,6 +44,10 @@ function AccountSettings() {
           title: 'Account Settings',
         }}
       />
+      <View style={{ width: '100%', marginBottom: 20 }}>
+        <Text text60BO>{auth.username}</Text>
+        <Text text70>{auth.email}</Text>
+      </View>
       <View style={{ width: '100%' }}>
         <MenuList
           data={[

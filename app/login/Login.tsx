@@ -20,7 +20,7 @@ function Login() {
   const { mutate, error } = useMutation({
     mutationFn: obtainTokenPair,
     onSuccess: ({ data }) => {
-      auth.setTokenPair(data);
+      auth.login(data);
     },
   });
 

@@ -11,7 +11,7 @@ import { getChatCharacters } from '@/api/chat-character';
 function Home() {
   const { auth } = useStores();
   const { data } = useQuery({
-    queryKey: ['characters', auth.isLogged],
+    queryKey: ['characters', auth.userId],
     queryFn: getChatCharacters,
     enabled: auth.isLogged,
   });

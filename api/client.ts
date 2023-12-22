@@ -50,6 +50,17 @@ const getNewAccessToken = async () => {
   return data.access;
 };
 
+export const verifyToken = async () => {
+  const accessToken = await getAccessToken();
+  if (!accessToken) return false;
+  try {
+    await client.post('/token/verify/', { token: accessToken });
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
 const shouldGetNewAccessToken = <
   E extends {
     response?: { status?: number };
@@ -72,9 +83,8 @@ client.interceptors.response.use(
       const accessToken = await getNewAccessToken();
       if (accessToken) {
         config.headers.set('Authorization', `Bearer ${accessToken}`);
+        return client(config);
       }
-
-      return client(config);
     }
     return Promise.reject(error);
   },
