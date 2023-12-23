@@ -1,7 +1,8 @@
 import { Typography, Colors } from 'react-native-ui-lib';
 
 Colors.loadColors({
-  primary: '#7851A9',
+  primary: '#a98651',
+  secondary: '#68a951',
 });
 
 Typography.loadTypographies({

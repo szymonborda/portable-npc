@@ -1,4 +1,4 @@
-import { View, Button, Text } from 'react-native-ui-lib';
+import { View, Button, Text, Colors } from 'react-native-ui-lib';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
@@ -67,6 +67,7 @@ export default function Password() {
           label="Change"
           onPress={handleSubmit(handlePasswordChange)}
           style={{ marginTop: 20 }}
+          backgroundColor={Colors.secondary}
         />
         {
           // @ts-expect-error error is incorrectly typed

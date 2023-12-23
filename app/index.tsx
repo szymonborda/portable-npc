@@ -52,13 +52,17 @@ function Home() {
             image={image}
           />
         ))}
-      <Card row onPress={() => router.push({ pathname: '/add-character' })}>
+      <Card
+        row
+        onPress={() => router.push({ pathname: '/add-character' })}
+        backgroundColor={Colors.secondary}
+      >
         <Card.Section
           content={[
             {
               text: '+ Add new character',
               text65L: true,
-              grey10: true,
+              white: true,
               style: { padding: 10 },
             },
           ]}

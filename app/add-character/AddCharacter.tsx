@@ -1,4 +1,4 @@
-import { View, Button, Text, Image } from 'react-native-ui-lib';
+import { View, Button, Text, Image, Colors } from 'react-native-ui-lib';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
@@ -143,6 +143,7 @@ function AddCharacter() {
           <Text red10>{imageState?.error?.message}</Text>
         )}
         <Button
+          backgroundColor={Colors.secondary}
           label="Add character"
           onPress={handleSubmit(handleAdd)}
           style={{ marginTop: 20 }}

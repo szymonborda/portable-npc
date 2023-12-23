@@ -17,14 +17,10 @@
       "bundleIdentifier": "com.szymonborda.portablenpc"
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
       "package": "com.szymonborda.portablenpc"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.ico"
     },
     "experiments": {
       "tsconfigPaths": true

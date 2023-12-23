@@ -10,7 +10,7 @@ export function ChatMessage({
   message: { role, content, state },
 }: ChatMessageProps) {
   const alignment = role === 'user' ? 'flex-end' : 'flex-start';
-  const backgroundColor = role === 'user' ? Colors.primary : Colors.grey30;
+  const backgroundColor = role === 'user' ? Colors.secondary : Colors.grey30;
   const viewStyles = {
     backgroundColor,
     borderRadius: 15,
