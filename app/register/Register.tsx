@@ -1,45 +1,40 @@
-import { observer } from 'mobx-react';
 import { View, Button, Text } from 'react-native-ui-lib';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { router, Stack } from 'expo-router';
-import { AxiosError } from 'axios';
-import {
-  ObtainTokenPairData,
-  ObtainTokenPairSchema,
-  obtainTokenPair,
-} from '@/api/auth';
+import { type AxiosError } from 'axios';
+import { RegisterData, RegisterSchema, register } from '@/api/auth';
 import FormInput from '@/components/FormInput';
-import useStores from '@/stores/useStores';
 
-function Login() {
-  const { control, handleSubmit, setError } = useForm<ObtainTokenPairData>({
-    resolver: zodResolver(ObtainTokenPairSchema),
+export default function Register() {
+  const { control, handleSubmit, setError } = useForm<RegisterData>({
+    resolver: zodResolver(RegisterSchema),
   });
-  const { auth } = useStores();
   const { mutate, error: mutationError } = useMutation({
-    mutationFn: obtainTokenPair,
-    onSuccess: ({ data }) => {
-      auth.login(data);
+    mutationFn: register,
+    onSuccess: () => {
+      router.back();
     },
-    onError: (error: AxiosError<ObtainTokenPairData>) => {
+    onError: (error: AxiosError<RegisterData>) => {
       setError('username', {
         type: 'manual',
-        message: error.response?.data?.username?.[0],
+        message: error?.response?.data?.username?.[0],
+      });
+      setError('email', {
+        type: 'manual',
+        message: error?.response?.data?.email?.[0],
       });
       setError('password', {
         type: 'manual',
-        message: error.response?.data?.password?.[0],
+        message: error?.response?.data?.password?.[0],
       });
     },
   });
 
-  const handleLogin = (data: { username: string; password: string }) => {
+  const handleRegister = (data: RegisterData) => {
     mutate(data);
   };
-
-  if (auth.isLogged) router.back();
 
   return (
     <View
@@ -58,6 +53,13 @@ function Login() {
           placeholder="Login"
         />
         <FormInput
+          name="email"
+          control={control}
+          defaultValue=""
+          placeholder="Email"
+          keyboardType="email-address"
+        />
+        <FormInput
           name="password"
           control={control}
           defaultValue=""
@@ -65,8 +67,8 @@ function Login() {
           secureTextEntry
         />
         <Button
-          label="Login"
-          onPress={handleSubmit(handleLogin)}
+          label="Register"
+          onPress={handleSubmit(handleRegister)}
           style={{ marginTop: 20 }}
         />
         {
@@ -83,5 +85,3 @@ function Login() {
     </View>
   );
 }
-
-export default observer(Login);

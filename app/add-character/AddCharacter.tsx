@@ -8,6 +8,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { Alert, ImageSourcePropType, Platform } from 'react-native';
 import { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
+import { AxiosError } from 'axios';
 import FormInput from '@/components/FormInput';
 import {
   AddCharacterData,
@@ -17,17 +18,29 @@ import {
 import useStores from '@/stores/useStores';
 
 function AddCharacter() {
-  const { control, handleSubmit, setValue, getFieldState } = useForm({
-    resolver: zodResolver(AddCharacterSchema),
-    values: {
-      name: '',
-      description: '',
-    } as AddCharacterData,
-  });
-  const { mutate, error } = useMutation({
+  const { control, handleSubmit, setValue, getFieldState, setError } =
+    useForm<AddCharacterData>({
+      resolver: zodResolver(AddCharacterSchema),
+    });
+  const { mutate, error: mutationError } = useMutation({
     mutationFn: addChatCharacter,
     onSuccess: () => {
       router.replace({ pathname: '/' });
+    },
+    onError: (error: AxiosError<AddCharacterData>) => {
+      setError('name', {
+        type: 'manual',
+        message: error.response?.data?.name?.[0],
+      });
+      setError('description', {
+        type: 'manual',
+        message: error.response?.data?.description?.[0],
+      });
+      setError('image', {
+        type: 'manual',
+        // @ts-expect-error
+        message: error.response?.data?.image?.[0],
+      });
     },
   });
 
@@ -96,7 +109,7 @@ function AddCharacter() {
           title: 'Add character',
         }}
       />
-      <View style={{ width: '100%' }}>
+      <View style={{ width: '100%', gap: 10 }}>
         <FormInput
           name="name"
           control={control}
@@ -112,7 +125,12 @@ function AddCharacter() {
         <View onTouchEnd={pickImage}>
           <Image
             source={currentImageSource}
-            style={{ width: 100, height: 100, position: 'relative' }}
+            style={{
+              width: 100,
+              height: 100,
+              position: 'relative',
+              borderRadius: 5,
+            }}
           />
           <Icon
             name="edit"
@@ -124,8 +142,21 @@ function AddCharacter() {
         {imageState?.error?.message && (
           <Text red10>{imageState?.error?.message}</Text>
         )}
-        <Button label="Add character" onPress={handleSubmit(handleAdd)} />
-        {error && <Text red10>{error.message}</Text>}
+        <Button
+          label="Add character"
+          onPress={handleSubmit(handleAdd)}
+          style={{ marginTop: 20 }}
+        />
+        {
+          // @ts-expect-error error is incorrectly typed
+          mutationError?.response?.data?.detail && (
+            // @ts-expect-error error is incorrectly typed
+            <Text red10>{mutationError?.response?.data?.detail}</Text>
+          )
+        }
+        {mutationError && !mutationError.response && (
+          <Text red10>Network error</Text>
+        )}
       </View>
     </View>
   );

@@ -7,8 +7,8 @@ import {
 } from '@/utils/asyncStorage';
 
 export const client = axios.create({
-  baseURL: 'http://192.168.0.102:8000/api/',
-  timeout: 60000,
+  baseURL: 'http://192.168.0.124:8000/api/',
+  timeout: 10000,
 });
 
 export const requestHandler = async <Response>(

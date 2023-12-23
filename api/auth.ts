@@ -21,11 +21,11 @@ export const ChangePasswordSchema = z.object({
     .min(8, 'Password must be at least 8 characters long'),
 });
 
-type ObtainTokenPairData = z.infer<typeof ObtainTokenPairSchema>;
+export type ObtainTokenPairData = z.infer<typeof ObtainTokenPairSchema>;
 
-type RegisterData = z.infer<typeof RegisterSchema>;
+export type RegisterData = z.infer<typeof RegisterSchema>;
 
-type ChangePasswordData = z.infer<typeof ChangePasswordSchema>;
+export type ChangePasswordData = z.infer<typeof ChangePasswordSchema>;
 
 export interface ObtainTokenPairResponse {
   access: string;
@@ -53,7 +53,7 @@ export const obtainTokenPair = async (data: ObtainTokenPairData) =>
 export const register = async (data: RegisterData) =>
   requestHandler<RegisterResponse>({
     method: 'POST',
-    url: '/users/',
+    url: '/register/',
     data,
   });
 

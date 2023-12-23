@@ -27,13 +27,21 @@ function Settings() {
               text: 'Account Settings',
               onPress: () => router.push('/settings/account'),
             },
-            auth.isLogged
-              ? { text: 'Logout', onPress: () => auth.logout(), color: 'red10' }
-              : {
-                  text: 'Login',
-                  onPress: () => router.push('/login'),
-                  color: 'blue10',
-                },
+            auth.isLogged && {
+              text: 'Logout',
+              onPress: () => auth.logout(),
+              color: 'red10',
+            },
+            !auth.isLogged && {
+              text: 'Login',
+              onPress: () => router.push('/login'),
+              color: 'blue10',
+            },
+            !auth.isLogged && {
+              text: 'Create an account',
+              onPress: () => router.push('/register'),
+              color: 'blue10',
+            },
           ].filter(Boolean)}
         />
       </View>
