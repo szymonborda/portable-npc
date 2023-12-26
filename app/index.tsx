@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import CharacterCard from '@/components/CharacterCard';
 import useStores from '@/stores/useStores';
 import { getChatCharacters } from '@/api/chat-character';
+import COMMON_NPCS from '@/consts/npcs';
 
 function Home() {
   const { auth } = useStores();
@@ -37,11 +38,14 @@ function Home() {
           ),
         }}
       />
-      <CharacterCard
-        name="Dwarf Edward"
-        description="You are Dwarf Edward. Help the explorer on his journey."
-        image="https://preview.redd.it/art-dwarf-warrior-v0-0t2k3788o5sa1.png?auto=webp&s=123dac9ca4f7ffff14b5b6125ff86db0b7f52d59"
-      />
+      {COMMON_NPCS.map(({ name, description, image }) => (
+        <CharacterCard
+          key={name}
+          name={name}
+          description={description}
+          image={image}
+        />
+      ))}
       {auth.isLogged &&
         data?.data.map(({ id, name, description, image }) => (
           <CharacterCard
