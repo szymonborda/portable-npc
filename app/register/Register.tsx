@@ -42,7 +42,7 @@ export default function Register() {
     >
       <Stack.Screen
         options={{
-          title: 'Login',
+          title: 'Register',
         }}
       />
       <View style={{ width: '100%', gap: 10 }}>

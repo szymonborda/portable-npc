@@ -11,10 +11,6 @@ export const client = axios.create({
   timeout: 60000,
 });
 
-export const requestHandler = async <Response>(
-  requestConfig: AxiosRequestConfig,
-) => client<Response>(requestConfig);
-
 client.interceptors.request.use(
   async (config) => {
     const access = await getAccessToken();
@@ -26,7 +22,9 @@ client.interceptors.request.use(
   (error) => Promise.reject(error),
 );
 
-const TOKEN_RELATED_URLS = ['/token/', '/token/refresh/'];
+export const requestHandler = async <Response>(
+  requestConfig: AxiosRequestConfig,
+) => client<Response>(requestConfig);
 
 interface RefreshTokenResponse {
   access: string;
@@ -60,6 +58,8 @@ export const verifyToken = async () => {
     return false;
   }
 };
+
+const TOKEN_RELATED_URLS = ['/token/', '/token/refresh/'];
 
 const shouldGetNewAccessToken = <
   E extends {
